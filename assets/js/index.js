@@ -12,22 +12,22 @@ class Validatecpf {
     if (typeof this.newCpf !== "string") false;
     if (!this.newCpf) false;
     if (this.newCpf.length !== 11) false;
-    const digit1 = this.calculateLastNumber(this.firstCalculateCpf());
-    const digit2 = this.calculateLastNumber(this.secondCalculateCpf());
+    const digit1 = Validatecpf.calculateLastNumber(this.firstCalculateCpf());
+    const digit2 = Validatecpf.calculateLastNumber(this.secondCalculateCpf());
     const cpf = this.removeTwoLastsNumbersCpf() + digit1 + digit2;
     const arr1 = cpf.split("").slice(0, 3);
     const arr2 = cpf.split("").slice(3, 6);
     const arr3 = cpf.split("").slice(6, 9);
     const arr4 = cpf.split("").slice(9, 11);
-    this.addCaracter(arr1, ".");
-    this.addCaracter(arr2, ".");
-    this.addCaracter(arr3, "-");
+    Validatecpf.addCaracter(arr1, ".");
+    Validatecpf.addCaracter(arr2, ".");
+    Validatecpf.addCaracter(arr3, "-");
     const newarray = arr1.concat(arr2, arr3, arr4);
     const verificate = newarray.join("") !== this.cpf ? false : true;
     return verificate;
   }
 
-  addCaracter(arr, caracter) {
+  static addCaracter(arr, caracter) {
     return arr.push(caracter);
   }
 
@@ -45,13 +45,15 @@ class Validatecpf {
     }, 0);
   }
 
-  calculateLastNumber(digit) {
+  static calculateLastNumber(digit) {
     const verificate = 11 - (digit % 11) > 9 ? 0 : 11 - (digit % 11);
     return verificate;
   }
 
   secondCalculateCpf() {
-    const digit = String(this.calculateLastNumber(this.firstCalculateCpf()));
+    const digit = String(
+      Validatecpf.calculateLastNumber(this.firstCalculateCpf())
+    );
     const cpf = this.removeTwoLastsNumbersCpf();
     const newCpf = cpf + digit;
     let max = 11;
